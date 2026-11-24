@@ -343,16 +343,6 @@ func procurementFromRow(row *types.Procurement) procurementRow {
 // coberturas
 // -----------------------------------------------------------------------------
 
-func (s *Store) upsertCoverage(c coverageRow) {
-	key := coverageKey(c)
-	if idx, ok := s.coveragesIndex[key]; ok {
-		s.coverages[idx] = c
-	} else {
-		s.coveragesIndex[key] = len(s.coverages)
-		s.coverages = append(s.coverages, c)
-	}
-}
-
 // RecordCoverage marca um escopo com status e total, preservando a ultima
 // pagina persistida.
 func (s *Store) RecordCoverage(ctx context.Context, entity, state, municipality, agencyCNPJ, startDate, endDate string, modality int, status string, total *int) error {

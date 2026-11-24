@@ -118,12 +118,12 @@ func (c *Client) Paginate(ctx context.Context, endpoint string, params map[strin
 		} else {
 			switch {
 			case resp.StatusCode == http.StatusNoContent:
-				resp.Body.Close()
+				_ = resp.Body.Close()
 				log.Info("204 sem conteudo")
 				return &Envelope{Empty: true}, nil
 			case resp.StatusCode != http.StatusOK:
 				body, _ := io.ReadAll(resp.Body)
-				resp.Body.Close()
+				_ = resp.Body.Close()
 				lastStatus = resp.StatusCode
 				lastErr = fmt.Errorf("pncp status %d: %s", resp.StatusCode, string(body))
 				log.Error("status nao 200", "attempt", i, "error", lastErr)
@@ -132,7 +132,7 @@ func (c *Client) Paginate(ctx context.Context, endpoint string, params map[strin
 				}
 			default:
 				body, rerr := io.ReadAll(resp.Body)
-				resp.Body.Close()
+				_ = resp.Body.Close()
 				if rerr != nil {
 					lastErr = rerr
 					log.Error("erro ao ler body", "attempt", i, "error", rerr)

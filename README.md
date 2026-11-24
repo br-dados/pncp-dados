@@ -10,7 +10,7 @@ e persiste os dados em Postgres (padrão) ou em planilha XLSX.
 ## Instalação
 
 ```bash
-go get github.com/br-dados/pncp-dados@v0.1.0
+go get github.com/br-dados/pncp-dados@v0.1.1
 ```
 
 ```go
@@ -32,7 +32,7 @@ Um escopo precisa de pelo menos uma dimensão. Escopo vazio retorna
 
 ## Requisitos
 
-- Go 1.22+
+- Go 1.25+
 - Postgres 15+ (apenas para persistência com  `postgres`)
 
 

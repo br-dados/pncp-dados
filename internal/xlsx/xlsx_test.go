@@ -96,8 +96,8 @@ func TestCoverages(t *testing.T) {
 	}
 	ctx := context.Background()
 
-	s.RecordPageProgress(ctx, "contratos", "GO", "5215231", "", "20260101", "20260102", 0, 3, intPointer(915))
-	s.RecordPageProgress(ctx, "contratos", "GO", "5215231", "", "20260101", "20260102", 0, 19, intPointer(915))
+	_ = s.RecordPageProgress(ctx, "contratos", "GO", "5215231", "", "20260101", "20260102", 0, 3, intPointer(915))
+	_ = s.RecordPageProgress(ctx, "contratos", "GO", "5215231", "", "20260101", "20260102", 0, 19, intPointer(915))
 	if err := s.RecordCoverage(ctx, "contratos", "GO", "5215231", "", "20260101", "20260102", 0, types.StatusCompleted, intPointer(915)); err != nil {
 		t.Fatal(err)
 	}

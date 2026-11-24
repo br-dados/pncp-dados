@@ -96,12 +96,12 @@ func serverContracts(t *testing.T, totalPages int, check func(path string, q url
 			check(req.URL.Path, req.URL.Query())
 		}
 		page := 0
-		fmt.Sscanf(req.URL.Query().Get("pagina"), "%d", &page)
+		_, _ = fmt.Sscanf(req.URL.Query().Get("pagina"), "%d", &page)
 		if page < 1 || page > totalPages {
-			json.NewEncoder(w).Encode(client.Envelope{Empty: true, TotalPages: totalPages})
+			_ = json.NewEncoder(w).Encode(client.Envelope{Empty: true, TotalPages: totalPages})
 			return
 		}
-		json.NewEncoder(w).Encode(client.Envelope{
+		_ = json.NewEncoder(w).Encode(client.Envelope{
 			TotalPages:     totalPages,
 			TotalRecords:   totalPages,
 			PageNumber:     page,
@@ -224,12 +224,12 @@ func TestHarvestProcurementsUsesServerSideFilter(t *testing.T) {
 			t.Errorf("codigoMunicipioIbge = %q (queria 5208707)", q.Get("codigoMunicipioIbge"))
 		}
 		modality := 0
-		fmt.Sscanf(q.Get("codigoModalidadeContratacao"), "%d", &modality)
+		_, _ = fmt.Sscanf(q.Get("codigoModalidadeContratacao"), "%d", &modality)
 		if modality < 1 || modality > 15 {
 			t.Errorf("modalidadeId = %d (fora de 1..15)", modality)
 		}
 		seen[modality] = true
-		json.NewEncoder(w).Encode(client.Envelope{
+		_ = json.NewEncoder(w).Encode(client.Envelope{
 			TotalPages:     1,
 			TotalRecords:   1,
 			PageNumber:     1,
