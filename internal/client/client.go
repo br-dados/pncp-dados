@@ -16,7 +16,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/danyele/dados-livres/internal/logger"
+	"github.com/br-dados/pncp-dados/internal/logger"
 )
 
 const (
@@ -25,7 +25,7 @@ const (
 	backoffSlow = 30 * time.Second
 	defaultBase = "https://pncp.gov.br/api/consulta/v1"
 	httpTimeout = 300 * time.Second
-	userAgent   = "dados-livres/1.0"
+	userAgent   = "pncp-dados/1.0"
 )
 
 // Endpoints da API de Consulta v1.
@@ -87,7 +87,7 @@ func (c *Client) Paginate(ctx context.Context, endpoint string, params map[strin
 	}
 	defer c.release()
 
-	log := logger.New("dados-livres: client: Paginate")
+	log := logger.New("pncp-dados: client: Paginate")
 	u, _ := url.Parse(c.baseURL + "/" + endpoint)
 	q := u.Query()
 	for k, v := range params {

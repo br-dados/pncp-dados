@@ -1,4 +1,4 @@
-module github.com/danyele/dados-livres
+module github.com/br-dados/pncp-dados
 
 go 1.22
 

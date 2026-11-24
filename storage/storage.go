@@ -1,13 +1,13 @@
-// Package storage define as interfaces de saida da biblioteca dados-livres.
+// Package storage define as interfaces de saida da biblioteca pncp-dados.
 // Implementacoes fornecidas: Postgres (default) e planilha XLSX. Outros
 // backends podem ser implementados pelo consumidor e injetados via
-// dadoslivres.Options.
+// pncpdados.Options.
 package storage
 
 import (
 	"context"
 
-	"github.com/danyele/dados-livres/pncp/types"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 // ErrSearchNotSupported e retornado por backends que nao implementam as buscas

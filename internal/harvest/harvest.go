@@ -10,13 +10,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/danyele/dados-livres/internal/client"
-	"github.com/danyele/dados-livres/internal/logger"
-	"github.com/danyele/dados-livres/internal/parse"
-	"github.com/danyele/dados-livres/internal/progress"
-	"github.com/danyele/dados-livres/internal/strutil"
-	"github.com/danyele/dados-livres/pncp/types"
-	"github.com/danyele/dados-livres/storage"
+	"github.com/br-dados/pncp-dados/internal/client"
+	"github.com/br-dados/pncp-dados/internal/logger"
+	"github.com/br-dados/pncp-dados/internal/parse"
+	"github.com/br-dados/pncp-dados/internal/progress"
+	"github.com/br-dados/pncp-dados/internal/strutil"
+	"github.com/br-dados/pncp-dados/storage"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 // ErrEmptyScope e retornado quando o escopo nao define nenhuma dimensao de
@@ -45,7 +45,7 @@ type Harvester struct {
 // New cria o Harvester de harvest/busca do PNCP.
 func New(client *client.Client, store storage.Storage, p *progress.HarvestProgress, cfg Config) *Harvester {
 	return &Harvester{
-		log:      logger.New("dados-livres: harvest"),
+		log:      logger.New("pncp-dados: harvest"),
 		client:   client,
 		store:    store,
 		progress: p,

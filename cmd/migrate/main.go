@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/danyele/dados-livres/internal/database"
+	"github.com/br-dados/pncp-dados/internal/database"
 )
 
 func main() {

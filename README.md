@@ -1,8 +1,24 @@
-# dados-livres
+# pncp-dados
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/br-dados/pncp-dados.svg)](https://pkg.go.dev/github.com/br-dados/pncp-dados)
+[![CI](https://github.com/br-dados/pncp-dados/actions/workflows/ci.yml/badge.svg)](https://github.com/br-dados/pncp-dados/actions/workflows/ci.yml)
 
 Biblioteca Go que constrói um índice offline de contratos e contratações do
 PNCP, pagina a API de Consulta v1 (`https://pncp.gov.br/api/consulta/v1`)
 e persiste os dados em Postgres (padrão) ou em planilha XLSX.
+
+## Instalação
+
+```bash
+go get github.com/br-dados/pncp-dados@v0.1.0
+```
+
+```go
+import (
+	pncpdados "github.com/br-dados/pncp-dados"
+	"github.com/br-dados/pncp-dados/types"
+)
+```
 
 
 | Modo | Recorte | Endpoint da API |
@@ -12,7 +28,7 @@ e persiste os dados em Postgres (padrão) ou em planilha XLSX.
 | Órgão | `--cnpj-orgao 01409580000138` | `/contratos?cnpjOrgao=01409580000138` |
 
 Um escopo precisa de pelo menos uma dimensão. Escopo vazio retorna
-`harvest.ErrEmptyScope`.
+`pncpdados.ErrEmptyScope`.
 
 ## Requisitos
 
@@ -22,16 +38,16 @@ Um escopo precisa de pelo menos uma dimensão. Escopo vazio retorna
 
 ### Configuração
 
-`dadoslivres.Options` configura a biblioteca.
+`pncpdados.Options` configura a biblioteca.
 
 ```go
-cliente, err := dadoslivres.New(ctx, dadoslivres.Options{
-	Postgres: &dadoslivres.PostgresConfig{
+cliente, err := pncpdados.New(ctx, pncpdados.Options{
+	Postgres: &pncpdados.PostgresConfig{
 		Host:     "localhost",
 		Port:     "5432",
 		User:     "postgres",
 		Password: "sua_senha",
-		Database: "tse_data",
+		Database: "pncp_dados",
 	},
 })
 defer cliente.Close()
@@ -42,7 +58,7 @@ defer cliente.Close()
 | `Storage string` | `postgres` | Backend de saída: `postgres` ou `xlsx` |
 | `CustomStorage storage.Storage` | `nil` | Backend próprio. Ignora `Storage`. |
 | `Postgres *PostgresConfig` | `nil` | Conexão do backend `postgres`. Obrigatório nesse modo. |
-| `XLSXPath string` | `internal/database/xlsx/dados-livres.xlsx` | Arquivo XLSX de saída |
+| `XLSXPath string` | `pncp-dados.xlsx` | Arquivo XLSX de saída |
 | `BaseURL string` | URL interna do PNCP | Override da URL da API (testes, proxy) |
 | `MaxConcurrency int` | `1` | Requisições simultâneas |
 | `DelayMS int` | `0` | Intervalo mínimo entre requisições |
@@ -104,21 +120,21 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/danyele/dados-livres"
-	"github.com/danyele/dados-livres/pncp/types"
+	"github.com/br-dados/pncp-dados"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 func main() {
 	ctx := context.Background()
 
-	cliente, err := dadoslivres.New(ctx, dadoslivres.Options{
-		Storage: "postgres",
-		Postgres: &dadoslivres.PostgresConfig{
+	cliente, err := pncpdados.New(ctx, pncpdados.Options{
+		Storage: pncpdados.StoragePostgres,
+		Postgres: &pncpdados.PostgresConfig{
 			Host:     "localhost",
 			Port:     "5432",
 			User:     "postgres",
 			Password: "sua_senha",
-			Database: "tse_data",
+			Database: "pncp_dados",
 		},
 	})
 	if err != nil {
@@ -150,23 +166,23 @@ opcionalmente `storage.Searcher` (buscas indexadas). Injete com
 `Options.CustomStorage`.
 
 ```go
-cliente, _ := dadoslivres.New(ctx, dadoslivres.Options{
+cliente, _ := pncpdados.New(ctx, pncpdados.Options{
 	CustomStorage: meuBackend,
 })
 ```
 
 ## Saída XLSX
 
-Sem configuração, a planilha é salva em `internal/database/xlsx/dados-livres.xlsx`.
+Sem configuração, a planilha é salva em `pncp-dados.xlsx`.
 Os subdiretórios são criados automaticamente. O caminho é configurável em dois
 níveis:
 
-1. Em código: `dadoslivres.Options{XLSXPath: "/tmp/contratacoes-go.xlsx"}`
+1. Em código: `pncpdados.Options{XLSXPath: "/tmp/contratacoes-go.xlsx"}`
 2. Na CLI: `harvest --caminho-xlsx /tmp/contratacoes-go.xlsx`, ou env `DADOS_LIVRES_XLSX_CAMINHO`
 
 ```go
-cliente, _ := dadoslivres.New(ctx, dadoslivres.Options{
-	Storage:  "xlsx",
+cliente, _ := pncpdados.New(ctx, pncpdados.Options{
+	Storage:  pncpdados.StorageXLSX,
 	XLSXPath: "relatorios/contratacoes-go.xlsx",
 })
 ```
@@ -190,7 +206,7 @@ biblioteca em código não lê ambiente.
 | `DB_PORT` | `5432` | Porta |
 | `DB_USER` | `postgres` | Usuário |
 | `DB_PASSWORD` | obrigatória | Senha. Sem default. |
-| `DB_NAME` | `tse_data` | Banco de dados |
+| `DB_NAME` | `pncp_dados` | Banco de dados |
 | `DADOS_LIVRES_DB_HOST` | `DB_HOST` | Sobrepõe `DB_HOST` |
 | `DADOS_LIVRES_DB_PORT` | `DB_PORT` | Sobrepõe `DB_PORT` |
 | `DADOS_LIVRES_DB_USER` | `DB_USER` | Sobrepõe `DB_USER` |
@@ -203,7 +219,7 @@ biblioteca em código não lê ambiente.
 | Variável | Default | Descrição |
 |----------|---------|-----------|
 | `DADOS_LIVRES_PERSISTENCIA` | `postgres` | Backend de saída |
-| `DADOS_LIVRES_XLSX_CAMINHO` | `internal/database/xlsx/dados-livres.xlsx` | Arquivo XLSX de saída |
+| `DADOS_LIVRES_XLSX_CAMINHO` | `pncp-dados.xlsx` | Arquivo XLSX de saída |
 | `DADOS_LIVRES_PNCP_BASE_URL` | `https://pncp.gov.br/api/consulta/v1` | URL interna da API |
 | `DADOS_LIVRES_MAX_CONCORRENCIA` | `1` | Requisições simultâneas |
 | `DADOS_LIVRES_DELAY_MS` | `0` | Intervalo mínimo entre requisições |
@@ -214,7 +230,7 @@ biblioteca em código não lê ambiente.
 
 Duas formas.
 
-Ao chamar `dadoslivres.New` com backend `postgres`, as migrations
+Ao chamar `pncpdados.New` com backend `postgres`, as migrations
 embutidas são aplicadas. Desligue com `ApplyMigrations` apontando para `false`.
 
 As migrations são idempotentes. Rodar de novo responde

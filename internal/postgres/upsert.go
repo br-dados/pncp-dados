@@ -10,8 +10,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
-	"github.com/danyele/dados-livres/internal/database"
-	"github.com/danyele/dados-livres/pncp/types"
+	"github.com/br-dados/pncp-dados/internal/database"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 // UpsertBatchSize define o numero de linhas por INSERT com UNNEST.

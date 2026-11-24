@@ -6,7 +6,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/danyele/dados-livres/pncp/types"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 // HarvestProgress agrega os contadores atomicos do harvest.

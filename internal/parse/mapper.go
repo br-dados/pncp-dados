@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/danyele/dados-livres/pncp/types"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 // Raw e um registro cru decodificado da API.

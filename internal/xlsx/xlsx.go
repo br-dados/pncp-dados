@@ -16,8 +16,8 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
-	"github.com/danyele/dados-livres/internal/strutil"
-	"github.com/danyele/dados-livres/pncp/types"
+	"github.com/br-dados/pncp-dados/internal/strutil"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 const (

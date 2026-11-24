@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/danyele/dados-livres/pncp/types"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 func TestUpsertAndStatusRoundTrip(t *testing.T) {

@@ -12,7 +12,7 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/danyele/dados-livres/internal/env"
+	"github.com/br-dados/pncp-dados/internal/env"
 )
 
 // DB é a superficie de banco consumida pelos repositorios e migracoes.

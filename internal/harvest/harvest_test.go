@@ -10,10 +10,10 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/danyele/dados-livres/internal/client"
-	"github.com/danyele/dados-livres/internal/progress"
-	"github.com/danyele/dados-livres/pncp/types"
-	"github.com/danyele/dados-livres/storage"
+	"github.com/br-dados/pncp-dados/internal/client"
+	"github.com/br-dados/pncp-dados/internal/progress"
+	"github.com/br-dados/pncp-dados/storage"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 // fakeStore e um storage.Storage em memoria para isolar o fluxo de harvest.

@@ -1,16 +1,4 @@
-// Package dadoslivres e a API publica da biblioteca dados-livres: harvest do
-// indice offline de contratos assinados da API de Consulta v1 do PNCP, com
-// saida configuravel (Postgres por padrao, ou planilha XLSX).
-//
-// Uso minimo (Postgres, configuracao 100% por codigo):
-//
-//	cliente, err := dadoslivres.New(ctx, dadoslivres.Options{
-//		Postgres: &dadoslivres.PostgresConfig{
-//			Host: "localhost", Port: "5432", User: "app", Password: "s3cret", Database: "dados_livres",
-//		},
-//	})
-//	resumo, err := cliente.Harvest(ctx, types.Scope{States: []string{"GO"}})
-package dadoslivres
+package pncpdados
 
 import (
 	"context"
@@ -19,14 +7,14 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/danyele/dados-livres/internal/client"
-	"github.com/danyele/dados-livres/internal/database"
-	"github.com/danyele/dados-livres/internal/harvest"
-	"github.com/danyele/dados-livres/internal/postgres"
-	"github.com/danyele/dados-livres/internal/progress"
-	"github.com/danyele/dados-livres/internal/xlsx"
-	"github.com/danyele/dados-livres/pncp/types"
-	"github.com/danyele/dados-livres/storage"
+	"github.com/br-dados/pncp-dados/internal/client"
+	"github.com/br-dados/pncp-dados/internal/database"
+	"github.com/br-dados/pncp-dados/internal/harvest"
+	"github.com/br-dados/pncp-dados/internal/postgres"
+	"github.com/br-dados/pncp-dados/internal/progress"
+	"github.com/br-dados/pncp-dados/internal/xlsx"
+	"github.com/br-dados/pncp-dados/storage"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 // PostgresConfig descreve a conexao Postgres do backend "postgres".
@@ -55,7 +43,7 @@ type Options struct {
 	CustomStorage storage.Storage
 
 	// XLSXPath e o arquivo de saida quando o backend e xlsx
-	// (default: internal/database/xlsx/dados-livres.xlsx).
+	// (default: pncp-dados.xlsx no diretorio atual).
 	XLSXPath string
 
 	// Postgres define a conexao do backend "postgres". Obrigatorio quando

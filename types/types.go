@@ -51,7 +51,7 @@ const (
 
 	// XLSXDefaultPath e o arquivo de saida padrao do backend xlsx
 	// (subdiretorios criados automaticamente na primeira gravacao).
-	XLSXDefaultPath = "internal/database/xlsx/dados-livres.xlsx"
+	XLSXDefaultPath = "pncp-dados.xlsx"
 )
 
 // Status da cobertura de um escopo na dados_livres_pncp_meta.

@@ -16,10 +16,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/danyele/dados-livres"
-	"github.com/danyele/dados-livres/internal/database"
-	"github.com/danyele/dados-livres/internal/env"
-	"github.com/danyele/dados-livres/pncp/types"
+	"github.com/br-dados/pncp-dados"
+	"github.com/br-dados/pncp-dados/internal/database"
+	"github.com/br-dados/pncp-dados/internal/env"
+	"github.com/br-dados/pncp-dados/types"
 )
 
 func main() {
@@ -53,7 +53,7 @@ func main() {
 
 	ctx := context.Background()
 
-	options := dadoslivres.Options{
+	options := pncpdados.Options{
 		Storage:        storageType,
 		XLSXPath:       xlsxCaminho,
 		BaseURL:        env.StringOr(baseURL, types.EnvPNCPBaseURL, ""),
@@ -63,7 +63,7 @@ func main() {
 	}
 	if storageType == "" || storageType == types.StoragePostgres {
 		cfg := database.ConfigFromEnv()
-		options.Postgres = &dadoslivres.PostgresConfig{
+		options.Postgres = &pncpdados.PostgresConfig{
 			Host:            cfg.Host,
 			Port:            cfg.Port,
 			User:            cfg.User,
@@ -76,7 +76,7 @@ func main() {
 		}
 	}
 
-	cliente, err := dadoslivres.New(ctx, options)
+	cliente, err := pncpdados.New(ctx, options)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "erro ao iniciar: %v\n", err)
 		os.Exit(1)

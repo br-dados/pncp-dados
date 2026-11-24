@@ -1,0 +1,18 @@
+# Binários
+/pncp-dados
+/cmd/harvest/harvest
+/cmd/migrate/migrate
+
+# Saídas do harvest
+*.xlsx
+*.xlsx.tmp
+
+# Cobertura e artefatos locais
+coverage.out
+*.test
+*.prof
+
+# Editor/OS
+.DS_Store
+.idea/
+.vscode/
